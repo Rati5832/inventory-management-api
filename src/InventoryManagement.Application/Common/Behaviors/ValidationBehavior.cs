@@ -3,14 +3,10 @@ using MediatR;
 
 namespace InventoryManagement.Application.Common.Behaviors;
 
-public class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidator<TRequest>> validators)
-    : IPipelineBehavior<TRequest, TResponse>
+public class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidator<TRequest>> validators) : IPipelineBehavior<TRequest, TResponse>
     where TRequest : notnull
 {
-    public async Task<TResponse> Handle(
-        TRequest request,
-        RequestHandlerDelegate<TResponse> next,
-        CancellationToken cancellationToken)
+    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
         if (!validators.Any())
         {
@@ -18,8 +14,7 @@ public class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidator<TReq
         }
 
         var context = new ValidationContext<TRequest>(request);
-        var validationResults = await Task.WhenAll(
-            validators.Select(validator => validator.ValidateAsync(context, cancellationToken)));
+        var validationResults = await Task.WhenAll(validators.Select(validator => validator.ValidateAsync(context, cancellationToken)));
 
         var failures = validationResults
             .SelectMany(result => result.Errors)

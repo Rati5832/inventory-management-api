@@ -4,8 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InventoryManagement.Infrastructure.Persistence;
 
-public class InventoryDbContext(DbContextOptions<InventoryDbContext> options)
-    : DbContext(options), IUnitOfWork
+public class InventoryDbContext(DbContextOptions<InventoryDbContext> options) : DbContext(options), IUnitOfWork
 {
     public DbSet<Category> Categories => Set<Category>();
 

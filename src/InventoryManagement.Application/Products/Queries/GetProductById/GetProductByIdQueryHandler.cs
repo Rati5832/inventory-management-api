@@ -6,8 +6,7 @@ using MediatR;
 
 namespace InventoryManagement.Application.Products.Queries.GetProductById;
 
-public class GetProductByIdQueryHandler(IProductRepository productRepository, IMapper mapper)
-    : IRequestHandler<GetProductByIdQuery, ProductResponse>
+public class GetProductByIdQueryHandler(IProductRepository productRepository, IMapper mapper) : IRequestHandler<GetProductByIdQuery, ProductResponse>
 {
     public async Task<ProductResponse> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
     {

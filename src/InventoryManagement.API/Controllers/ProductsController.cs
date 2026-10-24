@@ -5,7 +5,6 @@ using InventoryManagement.Application.Common.Models;
 using InventoryManagement.Application.Products.Dtos;
 using InventoryManagement.Application.Products.Queries.GetProductById;
 using InventoryManagement.Application.Products.Queries.GetProducts;
-using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,16 +12,23 @@ namespace InventoryManagement.API.Controllers;
 
 [ApiController]
 [Route("api/products")]
-public class ProductsController(ISender sender, IMapper mapper) : ControllerBase
+public class ProductsController(ISender sender) : ControllerBase
 {
     [HttpGet]
     [ProducesResponseType(typeof(PagedResult<ProductResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<PagedResult<ProductResponse>>> GetAll(
-        [FromQuery] GetProductsRequest request,
-        CancellationToken cancellationToken)
+    public async Task<ActionResult<PagedResult<ProductResponse>>> GetAll([FromQuery] GetProductsRequest request, CancellationToken cancellationToken)
     {
-        var query = mapper.Map<GetProductsQuery>(request);
+        var query = new GetProductsQuery(
+            request.PageNumber,
+            request.PageSize,
+            request.Search,
+            request.CategoryId,
+            request.IsActive,
+            request.MinPrice,
+            request.MaxPrice,
+            request.SortBy,
+            request.SortDirection);
         var response = await sender.Send(query, cancellationToken);
 
         return Ok(response);
@@ -43,10 +49,7 @@ public class ProductsController(ISender sender, IMapper mapper) : ControllerBase
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict)]
-    public async Task<ActionResult<ProductResponse>> Update(
-        Guid id,
-        UpdateProductRequest request,
-        CancellationToken cancellationToken)
+    public async Task<ActionResult<ProductResponse>> Update(Guid id, UpdateProductRequest request, CancellationToken cancellationToken)
     {
         var command = new UpdateProductCommand(
             id,
@@ -80,7 +83,13 @@ public class ProductsController(ISender sender, IMapper mapper) : ControllerBase
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict)]
     public async Task<ActionResult<ProductResponse>> Create(CreateProductRequest request, CancellationToken cancellationToken)
     {
-        var command = mapper.Map<CreateProductCommand>(request);
+        var command = new CreateProductCommand(
+            request.Name,
+            request.Sku,
+            request.Description,
+            request.Price,
+            request.ReorderLevel,
+            request.CategoryId);
         var response = await sender.Send(command, cancellationToken);
 
         return CreatedAtAction(nameof(GetById), new { id = response.Id }, response);

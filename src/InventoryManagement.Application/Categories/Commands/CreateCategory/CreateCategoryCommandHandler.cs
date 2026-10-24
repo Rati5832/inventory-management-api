@@ -8,18 +8,13 @@ using MediatR;
 
 namespace InventoryManagement.Application.Categories.Commands.CreateCategory;
 
-public class CreateCategoryCommandHandler(
-    ICategoryRepository categoryRepository,
-    IUnitOfWork unitOfWork,
-    IMapper mapper) : IRequestHandler<CreateCategoryCommand, CategoryResponse>
+public class CreateCategoryCommandHandler(ICategoryRepository categoryRepository, IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<CreateCategoryCommand, CategoryResponse>
 {
     public async Task<CategoryResponse> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
     {
         var normalizedName = request.Name.Trim();
 
-        if (await categoryRepository.ExistsByNameAsync(
-                normalizedName,
-                cancellationToken: cancellationToken))
+        if (await categoryRepository.ExistsByNameAsync(normalizedName, cancellationToken: cancellationToken))
         {
             throw new ConflictException($"Category with name '{normalizedName}' already exists.");
         }

@@ -6,8 +6,7 @@ using MediatR;
 
 namespace InventoryManagement.Application.Categories.Queries.GetCategoryById;
 
-public class GetCategoryByIdQueryHandler(ICategoryRepository categoryRepository,
-    IMapper mapper) : IRequestHandler<GetCategoryByIdQuery, CategoryResponse>
+public class GetCategoryByIdQueryHandler(ICategoryRepository categoryRepository, IMapper mapper) : IRequestHandler<GetCategoryByIdQuery, CategoryResponse>
 {
     public async Task<CategoryResponse> Handle(GetCategoryByIdQuery request, CancellationToken cancellationToken)
     {

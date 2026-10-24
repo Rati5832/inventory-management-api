@@ -11,10 +11,8 @@ public class ProductMappingConfig : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<CreateProductRequest, CreateProductCommand>();
         config.NewConfig<CreateProductCommand, Product>();
         config.NewConfig<Product, ProductResponse>();
-        config.NewConfig<GetProductsRequest, GetProductsQuery>();
         config.NewConfig<GetProductsQuery, ProductFilter>();
     }
 }

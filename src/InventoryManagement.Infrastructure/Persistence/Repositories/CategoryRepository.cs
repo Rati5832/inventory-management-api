@@ -8,16 +8,13 @@ public class CategoryRepository(InventoryDbContext dbContext) : Repository<Categ
 {
     public Task<bool> ExistsByNameAsync(string name, Guid? excludedCategoryId = null, CancellationToken cancellationToken = default)
     {
-        return Entities.AnyAsync(category =>
-        category.Name == name &&
-        (!excludedCategoryId.HasValue || category.Id != excludedCategoryId.Value),
+        return Entities.AnyAsync(
+            category => category.Name == name && (!excludedCategoryId.HasValue || category.Id != excludedCategoryId.Value),
             cancellationToken);
     }
 
     public Task<bool> HasProductsAsync(Guid categoryId, CancellationToken cancellationToken = default)
     {
-        return Entities.AnyAsync(
-            category => category.Id == categoryId && category.Products.Any(),
-            cancellationToken);
+        return Entities.AnyAsync(category => category.Id == categoryId && category.Products.Any(), cancellationToken);
     }
 }

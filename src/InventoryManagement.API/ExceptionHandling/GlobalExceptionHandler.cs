@@ -7,10 +7,7 @@ namespace InventoryManagement.API.ExceptionHandling;
 
 public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger) : IExceptionHandler
 {
-    public async ValueTask<bool> TryHandleAsync(
-        HttpContext httpContext,
-        Exception exception,
-        CancellationToken cancellationToken)
+    public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
         logger.LogError(exception, "An exception occurred while processing the request.");
 
@@ -43,8 +40,7 @@ public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger) : IE
         return true;
     }
 
-    private static ValidationProblemDetails CreateValidationProblem(
-        ValidationException exception)
+    private static ValidationProblemDetails CreateValidationProblem(ValidationException exception)
     {
         var errors = exception.Errors
             .GroupBy(error => error.PropertyName)

@@ -5,14 +5,9 @@ using MediatR;
 
 namespace InventoryManagement.Application.Categories.Queries.GetAllCategories;
 
-public class GetAllCategoriesQueryHandler(
-    ICategoryRepository categoryRepository,
-    IMapper mapper)
-    : IRequestHandler<GetAllCategoriesQuery, IReadOnlyCollection<CategoryResponse>>
+public class GetAllCategoriesQueryHandler(ICategoryRepository categoryRepository, IMapper mapper) : IRequestHandler<GetAllCategoriesQuery, IReadOnlyCollection<CategoryResponse>>
 {
-    public async Task<IReadOnlyCollection<CategoryResponse>> Handle(
-        GetAllCategoriesQuery request,
-        CancellationToken cancellationToken)
+    public async Task<IReadOnlyCollection<CategoryResponse>> Handle(GetAllCategoriesQuery request, CancellationToken cancellationToken)
     {
         var categories = await categoryRepository.GetAllAsync(cancellationToken);
 
