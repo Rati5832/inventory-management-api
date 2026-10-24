@@ -9,6 +9,10 @@ public class StockMovement : BaseEntity
 
     public int Quantity { get; set; }
 
+    public int? PreviousQuantity { get; set; }
+
+    public int? NewQuantity { get; set; }
+
     public string? Note { get; set; }
 
     public Guid StockId { get; set; }

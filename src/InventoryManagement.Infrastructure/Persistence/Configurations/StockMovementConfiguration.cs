@@ -10,7 +10,12 @@ public class StockMovementConfiguration : IEntityTypeConfiguration<StockMovement
     {
         builder.ToTable(
             "StockMovements",
-            tableBuilder => tableBuilder.HasCheckConstraint("CK_StockMovements_Quantity", "[Quantity] > 0"));
+            tableBuilder =>
+            {
+                tableBuilder.HasCheckConstraint("CK_StockMovements_Quantity", "[Quantity] > 0");
+                tableBuilder.HasCheckConstraint("CK_StockMovements_PreviousQuantity", "[PreviousQuantity] IS NULL OR [PreviousQuantity] >= 0");
+                tableBuilder.HasCheckConstraint("CK_StockMovements_NewQuantity", "[NewQuantity] IS NULL OR [NewQuantity] >= 0");
+            });
 
         builder.HasKey(movement => movement.Id);
 
