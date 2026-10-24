@@ -1,6 +1,7 @@
 using InventoryManagement.Application.Categories.Interfaces;
 using InventoryManagement.Application.Common.Interfaces;
 using InventoryManagement.Application.Products.Interfaces;
+using InventoryManagement.Application.ProductSuppliers.Interfaces;
 using InventoryManagement.Application.Stocks.Interfaces;
 using InventoryManagement.Application.Suppliers.Interfaces;
 using InventoryManagement.Application.Warehouses.Interfaces;
@@ -27,6 +28,7 @@ public static class DependencyInjection
 
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<IProductSupplierRepository, ProductSupplierRepository>();
         services.AddScoped<IStockMovementRepository, StockMovementRepository>();
         services.AddScoped<IStockRepository, StockRepository>();
         services.AddScoped<ISupplierRepository, SupplierRepository>();
