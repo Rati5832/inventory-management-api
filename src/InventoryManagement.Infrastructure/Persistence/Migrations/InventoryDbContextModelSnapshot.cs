@@ -226,9 +226,15 @@ namespace InventoryManagement.Infrastructure.Persistence.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("SYSUTCDATETIME()");
 
+                    b.Property<int?>("NewQuantity")
+                        .HasColumnType("int");
+
                     b.Property<string>("Note")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
+
+                    b.Property<int?>("PreviousQuantity")
+                        .HasColumnType("int");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -250,6 +256,10 @@ namespace InventoryManagement.Infrastructure.Persistence.Migrations
 
                     b.ToTable("StockMovements", null, t =>
                         {
+                            t.HasCheckConstraint("CK_StockMovements_NewQuantity", "[NewQuantity] IS NULL OR [NewQuantity] >= 0");
+
+                            t.HasCheckConstraint("CK_StockMovements_PreviousQuantity", "[PreviousQuantity] IS NULL OR [PreviousQuantity] >= 0");
+
                             t.HasCheckConstraint("CK_StockMovements_Quantity", "[Quantity] > 0");
                         });
                 });
