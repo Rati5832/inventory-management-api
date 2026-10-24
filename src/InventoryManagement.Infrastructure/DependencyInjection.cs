@@ -1,6 +1,7 @@
 using InventoryManagement.Application.Categories.Interfaces;
 using InventoryManagement.Application.Common.Interfaces;
 using InventoryManagement.Application.Products.Interfaces;
+using InventoryManagement.Application.Suppliers.Interfaces;
 using InventoryManagement.Application.Warehouses.Interfaces;
 using InventoryManagement.Infrastructure.Persistence;
 using InventoryManagement.Infrastructure.Persistence.Repositories;
@@ -25,6 +26,7 @@ public static class DependencyInjection
 
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<ISupplierRepository, SupplierRepository>();
         services.AddScoped<IWarehouseRepository, WarehouseRepository>();
         services.AddScoped<IUnitOfWork>(serviceProvider =>
             serviceProvider.GetRequiredService<InventoryDbContext>());
