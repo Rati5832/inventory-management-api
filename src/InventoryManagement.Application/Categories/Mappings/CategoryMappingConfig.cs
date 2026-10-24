@@ -9,7 +9,6 @@ public class CategoryMappingConfig : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<CreateCategoryRequest, CreateCategoryCommand>();
         config.NewConfig<CreateCategoryCommand, Category>();
         config.NewConfig<Category, CategoryResponse>();
     }

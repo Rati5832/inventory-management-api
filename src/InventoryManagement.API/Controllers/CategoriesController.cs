@@ -4,7 +4,6 @@ using InventoryManagement.Application.Categories.Commands.UpdateCategory;
 using InventoryManagement.Application.Categories.Dtos;
 using InventoryManagement.Application.Categories.Queries.GetAllCategories;
 using InventoryManagement.Application.Categories.Queries.GetCategoryById;
-using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,7 +11,7 @@ namespace InventoryManagement.API.Controllers;
 
 [ApiController]
 [Route("api/categories")]
-public class CategoriesController(ISender sender, IMapper mapper) : ControllerBase
+public class CategoriesController(ISender sender) : ControllerBase
 {
     [HttpGet]
     [ProducesResponseType(typeof(IReadOnlyCollection<CategoryResponse>), StatusCodes.Status200OK)]
@@ -36,10 +35,7 @@ public class CategoriesController(ISender sender, IMapper mapper) : ControllerBa
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict)]
-    public async Task<ActionResult<CategoryResponse>> Update(
-        Guid id,
-        UpdateCategoryRequest request,
-        CancellationToken cancellationToken)
+    public async Task<ActionResult<CategoryResponse>> Update(Guid id, UpdateCategoryRequest request, CancellationToken cancellationToken)
     {
         var command = new UpdateCategoryCommand(id, request.Name, request.Description);
         var response = await sender.Send(command, cancellationToken);
@@ -64,7 +60,7 @@ public class CategoriesController(ISender sender, IMapper mapper) : ControllerBa
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict)]
     public async Task<ActionResult<CategoryResponse>> Create(CreateCategoryRequest request, CancellationToken cancellationToken)
     {
-        var command = mapper.Map<CreateCategoryCommand>(request);
+        var command = new CreateCategoryCommand(request.Name, request.Description);
         var response = await sender.Send(command, cancellationToken);
 
         return CreatedAtAction(nameof(GetById), new { id = response.Id }, response);

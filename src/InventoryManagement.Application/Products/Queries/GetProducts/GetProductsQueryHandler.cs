@@ -7,8 +7,7 @@ using MediatR;
 
 namespace InventoryManagement.Application.Products.Queries.GetProducts;
 
-public class GetProductsQueryHandler(IProductRepository productRepository, IMapper mapper)
-    : IRequestHandler<GetProductsQuery, PagedResult<ProductResponse>>
+public class GetProductsQueryHandler(IProductRepository productRepository, IMapper mapper) : IRequestHandler<GetProductsQuery, PagedResult<ProductResponse>>
 {
     public async Task<PagedResult<ProductResponse>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
     {

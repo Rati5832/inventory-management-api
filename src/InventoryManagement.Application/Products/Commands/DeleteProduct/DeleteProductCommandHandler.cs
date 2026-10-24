@@ -5,8 +5,7 @@ using MediatR;
 
 namespace InventoryManagement.Application.Products.Commands.DeleteProduct;
 
-public class DeleteProductCommandHandler(IProductRepository productRepository, IUnitOfWork unitOfWork)
-    : IRequestHandler<DeleteProductCommand>
+public class DeleteProductCommandHandler(IProductRepository productRepository, IUnitOfWork unitOfWork) : IRequestHandler<DeleteProductCommand>
 {
     public async Task Handle(DeleteProductCommand request, CancellationToken cancellationToken)
     {

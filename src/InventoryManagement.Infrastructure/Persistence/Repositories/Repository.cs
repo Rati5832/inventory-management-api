@@ -11,8 +11,7 @@ public abstract class Repository<T>(InventoryDbContext dbContext) : IRepository<
 
     protected DbSet<T> Entities { get; } = dbContext.Set<T>();
 
-    public async Task<IReadOnlyCollection<T>> GetAllAsync(
-        CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyCollection<T>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         return await Entities
             .AsNoTracking()

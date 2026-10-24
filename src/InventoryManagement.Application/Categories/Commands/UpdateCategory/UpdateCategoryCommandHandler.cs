@@ -7,10 +7,7 @@ using MediatR;
 
 namespace InventoryManagement.Application.Categories.Commands.UpdateCategory;
 
-public class UpdateCategoryCommandHandler(
-    ICategoryRepository categoryRepository,
-    IUnitOfWork unitOfWork,
-    IMapper mapper) : IRequestHandler<UpdateCategoryCommand, CategoryResponse>
+public class UpdateCategoryCommandHandler(ICategoryRepository categoryRepository, IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<UpdateCategoryCommand, CategoryResponse>
 {
     public async Task<CategoryResponse> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
     {
@@ -19,10 +16,7 @@ public class UpdateCategoryCommandHandler(
 
         var normalizedName = request.Name.Trim();
 
-        if (await categoryRepository.ExistsByNameAsync(
-                normalizedName,
-                request.Id,
-                cancellationToken))
+        if (await categoryRepository.ExistsByNameAsync(normalizedName, request.Id, cancellationToken))
         {
             throw new ConflictException($"Category with name '{normalizedName}' already exists.");
         }
