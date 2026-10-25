@@ -1,6 +1,6 @@
 namespace InventoryManagement.Application.Products.Dtos;
 
-public sealed record ProductResponse(
+public record ProductResponse(
     Guid Id,
     string Name,
     string Sku,

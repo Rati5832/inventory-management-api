@@ -1,6 +1,6 @@
 namespace InventoryManagement.Application.Stocks.Dtos;
 
-public sealed record StockTransferResponse(
+public record StockTransferResponse(
     Guid SourceMovementId,
     Guid DestinationMovementId,
     Guid SourceStockId,

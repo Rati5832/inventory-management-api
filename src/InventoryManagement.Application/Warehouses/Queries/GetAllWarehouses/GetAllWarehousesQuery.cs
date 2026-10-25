@@ -3,4 +3,4 @@ using MediatR;
 
 namespace InventoryManagement.Application.Warehouses.Queries.GetAllWarehouses;
 
-public sealed record GetAllWarehousesQuery : IRequest<IReadOnlyCollection<WarehouseResponse>>;
+public record GetAllWarehousesQuery : IRequest<IReadOnlyCollection<WarehouseResponse>>;

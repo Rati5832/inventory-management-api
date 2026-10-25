@@ -4,7 +4,7 @@ using MediatR;
 
 namespace InventoryManagement.Application.Products.Queries.GetProducts;
 
-public sealed record GetProductsQuery(
+public record GetProductsQuery(
     int PageNumber,
     int PageSize,
     string? Search,

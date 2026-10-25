@@ -3,7 +3,7 @@ using MediatR;
 
 namespace InventoryManagement.Application.Stocks.Commands.TransferStock;
 
-public sealed record TransferStockCommand(
+public record TransferStockCommand(
     Guid ProductId,
     Guid SourceWarehouseId,
     Guid DestinationWarehouseId,

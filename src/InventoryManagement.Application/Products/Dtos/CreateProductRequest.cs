@@ -1,6 +1,6 @@
 namespace InventoryManagement.Application.Products.Dtos;
 
-public sealed record CreateProductRequest(
+public record CreateProductRequest(
     string Name,
     string Sku,
     string? Description,

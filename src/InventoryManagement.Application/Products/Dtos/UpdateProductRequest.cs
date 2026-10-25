@@ -1,6 +1,6 @@
 namespace InventoryManagement.Application.Products.Dtos;
 
-public sealed record UpdateProductRequest(
+public record UpdateProductRequest(
     string Name,
     string Sku,
     string? Description,

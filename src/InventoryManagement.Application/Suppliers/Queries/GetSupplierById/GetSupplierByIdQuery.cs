@@ -3,4 +3,4 @@ using MediatR;
 
 namespace InventoryManagement.Application.Suppliers.Queries.GetSupplierById;
 
-public sealed record GetSupplierByIdQuery(Guid Id) : IRequest<SupplierResponse>;
+public record GetSupplierByIdQuery(Guid Id) : IRequest<SupplierResponse>;
