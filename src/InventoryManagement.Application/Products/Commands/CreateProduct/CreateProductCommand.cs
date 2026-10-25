@@ -3,7 +3,7 @@ using MediatR;
 
 namespace InventoryManagement.Application.Products.Commands.CreateProduct;
 
-public sealed record CreateProductCommand(
+public record CreateProductCommand(
     string Name,
     string Sku,
     string? Description,

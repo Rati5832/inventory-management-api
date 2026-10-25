@@ -3,4 +3,4 @@ using MediatR;
 
 namespace InventoryManagement.Application.Stocks.Queries.GetLowStocks;
 
-public sealed record GetLowStocksQuery : IRequest<IReadOnlyCollection<StockResponse>>;
+public record GetLowStocksQuery : IRequest<IReadOnlyCollection<StockResponse>>;

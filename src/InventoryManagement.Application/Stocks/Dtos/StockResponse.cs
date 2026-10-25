@@ -1,6 +1,6 @@
 namespace InventoryManagement.Application.Stocks.Dtos;
 
-public sealed record StockResponse(
+public record StockResponse(
     Guid Id,
     Guid ProductId,
     string ProductName,

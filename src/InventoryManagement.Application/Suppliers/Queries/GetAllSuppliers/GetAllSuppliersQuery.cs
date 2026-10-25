@@ -3,4 +3,4 @@ using MediatR;
 
 namespace InventoryManagement.Application.Suppliers.Queries.GetAllSuppliers;
 
-public sealed record GetAllSuppliersQuery : IRequest<IReadOnlyCollection<SupplierResponse>>;
+public record GetAllSuppliersQuery : IRequest<IReadOnlyCollection<SupplierResponse>>;

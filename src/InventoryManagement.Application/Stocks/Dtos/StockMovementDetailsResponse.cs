@@ -2,7 +2,7 @@ using InventoryManagement.Domain.Enums;
 
 namespace InventoryManagement.Application.Stocks.Dtos;
 
-public sealed record StockMovementDetailsResponse(
+public record StockMovementDetailsResponse(
     Guid Id,
     Guid StockId,
     Guid ProductId,

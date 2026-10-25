@@ -1,6 +1,6 @@
 namespace InventoryManagement.Application.Products.Models;
 
-public sealed record ProductFilter(
+public record ProductFilter(
     int PageNumber,
     int PageSize,
     string? Search,

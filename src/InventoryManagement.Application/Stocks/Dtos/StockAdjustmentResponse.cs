@@ -1,6 +1,6 @@
 namespace InventoryManagement.Application.Stocks.Dtos;
 
-public sealed record StockAdjustmentResponse(
+public record StockAdjustmentResponse(
     Guid MovementId,
     Guid StockId,
     int PreviousQuantity,

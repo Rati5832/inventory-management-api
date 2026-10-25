@@ -3,4 +3,4 @@ using MediatR;
 
 namespace InventoryManagement.Application.Warehouses.Queries.GetWarehouseById;
 
-public sealed record GetWarehouseByIdQuery(Guid Id) : IRequest<WarehouseResponse>;
+public record GetWarehouseByIdQuery(Guid Id) : IRequest<WarehouseResponse>;

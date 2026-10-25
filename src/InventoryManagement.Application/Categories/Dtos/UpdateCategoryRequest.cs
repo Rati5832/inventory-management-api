@@ -1,3 +1,3 @@
 namespace InventoryManagement.Application.Categories.Dtos;
 
-public sealed record UpdateCategoryRequest(string Name, string? Description);
+public record UpdateCategoryRequest(string Name, string? Description);

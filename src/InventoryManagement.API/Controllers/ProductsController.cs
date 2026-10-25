@@ -9,6 +9,11 @@ using InventoryManagement.Application.ProductSuppliers.Commands.AssignSupplier;
 using InventoryManagement.Application.ProductSuppliers.Commands.RemoveSupplier;
 using InventoryManagement.Application.ProductSuppliers.Dtos;
 using InventoryManagement.Application.ProductSuppliers.Queries.GetProductSuppliers;
+using InventoryManagement.Application.ProductFiles.Commands.UploadProductFile;
+using InventoryManagement.Application.ProductFiles.Commands.DeleteProductFile;
+using InventoryManagement.Application.ProductFiles.Dtos;
+using InventoryManagement.Application.ProductFiles.Queries.GetProductFiles;
+using InventoryManagement.Application.ProductFiles.Queries.DownloadProductFile;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -68,6 +73,55 @@ public class ProductsController(ISender sender) : ControllerBase
         var response = await sender.Send(new GetProductSuppliersQuery(productId), cancellationToken);
 
         return Ok(response);
+    }
+
+    [HttpPost("{productId:guid}/files")]
+    [ProducesResponseType(typeof(ProductFileResponse), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<ProductFileResponse>> UploadFile(Guid productId, IFormFile file, CancellationToken cancellationToken)
+    {
+        await using var content = file.OpenReadStream();
+        var command = new UploadProductFileCommand(
+            productId,
+            content,
+            Path.GetFileName(file.FileName),
+            file.ContentType,
+            file.Length);
+        var response = await sender.Send(command, cancellationToken);
+
+        return StatusCode(StatusCodes.Status201Created, response);
+    }
+
+    [HttpGet("{productId:guid}/files")]
+    [ProducesResponseType(typeof(IReadOnlyCollection<ProductFileResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<IReadOnlyCollection<ProductFileResponse>>> GetFiles(Guid productId, CancellationToken cancellationToken)
+    {
+        var response = await sender.Send(new GetProductFilesQuery(productId), cancellationToken);
+
+        return Ok(response);
+    }
+
+    [HttpGet("{productId:guid}/files/{fileId:guid}/download")]
+    [ProducesResponseType(typeof(FileStreamResult), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DownloadFile(Guid productId, Guid fileId, CancellationToken cancellationToken)
+    {
+        var response = await sender.Send(new DownloadProductFileQuery(productId, fileId), cancellationToken);
+
+        return File(response.Content, response.ContentType, response.FileName);
+    }
+
+    [HttpDelete("{productId:guid}/files/{fileId:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DeleteFile(Guid productId, Guid fileId, CancellationToken cancellationToken)
+    {
+        await sender.Send(new DeleteProductFileCommand(productId, fileId), cancellationToken);
+
+        return NoContent();
     }
 
     [HttpDelete("{productId:guid}/suppliers/{supplierId:guid}")]
