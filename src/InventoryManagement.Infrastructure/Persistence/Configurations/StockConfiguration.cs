@@ -17,6 +17,9 @@ public class StockConfiguration : IEntityTypeConfiguration<Stock>
         builder.Property(stock => stock.CreatedAtUtc)
             .HasDefaultValueSql("SYSUTCDATETIME()");
 
+        builder.Property(stock => stock.RowVersion)
+            .IsRowVersion();
+
         builder.HasIndex(stock => new { stock.ProductId, stock.WarehouseId })
             .IsUnique();
 

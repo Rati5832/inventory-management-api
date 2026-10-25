@@ -14,5 +14,7 @@ public class Stock : BaseEntity
 
     public Warehouse Warehouse { get; set; } = null!;
 
+    public byte[] RowVersion { get; set; } = [];
+
     public ICollection<StockMovement> Movements { get; set; } = new List<StockMovement>();
 }
