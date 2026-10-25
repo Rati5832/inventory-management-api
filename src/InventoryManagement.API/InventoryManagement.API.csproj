@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>inventory-management-api-5d3487cc-6a21-4479-ae1a-945912a7a21e</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
