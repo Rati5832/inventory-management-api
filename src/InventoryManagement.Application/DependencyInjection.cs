@@ -17,6 +17,7 @@ public static class DependencyInjection
 
         services.AddValidatorsFromAssembly(applicationAssembly);
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestLoggingBehavior<,>));
 
         TypeAdapterConfig.GlobalSettings.Scan(applicationAssembly);
         services.AddMapster();
